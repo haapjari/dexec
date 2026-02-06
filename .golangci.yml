@@ -1,0 +1,183 @@
+# golangci-lint configuration (v2 format)
+# https://golangci-lint.run/usage/configuration/
+
+version: "2"
+
+run:
+  timeout: 5m
+
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    goimports:
+      local-prefixes:
+        - github.com/haapjari/dexec
+
+linters:
+  default: none
+  enable:
+    # bugs
+    - errcheck
+    - govet
+    - staticcheck
+    - ineffassign
+    - unused
+    - bodyclose
+    - noctx
+    - errorlint
+    - nilerr
+    - nilnil
+    - reassign
+    - wastedassign
+    - copyloopvar
+
+    # style
+    - goconst
+    - gocritic
+    - misspell
+    - unconvert
+    - whitespace
+    - nolintlint
+    - revive
+    - dupword
+    - godot
+
+    # security
+    - gosec
+
+    # complexity
+    - dupl
+    - funlen
+    - gocyclo
+    - gocognit
+    - maintidx
+    - nestif
+
+    # performance
+    - prealloc
+    - perfsprint
+
+    # code quality
+    - nakedret
+    - unparam
+    - dogsled
+    - goprintffuncname
+    - asciicheck
+    - bidichk
+    - durationcheck
+    - forcetypeassert
+    - predeclared
+    - usestdlibvars
+    - makezero
+    - thelper
+    - tparallel
+    - intrange
+    - fatcontext
+    - recvcheck
+    - gochecknoinits
+    - gocheckcompilerdirectives
+
+    # testing
+    - testifylint
+    - testableexamples
+
+  settings:
+    errcheck:
+      check-type-assertions: true
+      check-blank: true
+    govet:
+      enable:
+        - shadow
+        - nilness
+    goconst:
+      min-len: 2
+      min-occurrences: 3
+    gocritic:
+      enabled-tags:
+        - diagnostic
+        - experimental
+        - opinionated
+        - performance
+        - style
+      disabled-checks:
+        - dupImport
+        - ifElseChain
+        - octalLiteral
+        - whyNoLint
+        - hugeParam
+    gocyclo:
+      min-complexity: 15
+    gocognit:
+      min-complexity: 20
+    funlen:
+      lines: 100
+      statements: 50
+    dupl:
+      threshold: 100
+    misspell:
+      locale: US
+    nakedret:
+      max-func-lines: 30
+    nolintlint:
+      allow-unused: false
+      require-explanation: true
+      require-specific: true
+    gosec:
+      excludes:
+        - G304
+        - G306
+    nestif:
+      min-complexity: 4
+    maintidx:
+      under: 20
+    revive:
+      rules:
+        - name: blank-imports
+        - name: context-as-argument
+        - name: context-keys-type
+        - name: dot-imports
+        - name: error-return
+        - name: error-strings
+        - name: error-naming
+        - name: exported
+          disabled: true
+        - name: increment-decrement
+        - name: var-naming
+        - name: var-declaration
+        - name: package-comments
+          disabled: true
+        - name: range
+        - name: receiver-naming
+        - name: time-naming
+        - name: unexported-return
+        - name: indent-error-flow
+        - name: errorf
+        - name: empty-block
+        - name: superfluous-else
+        - name: unused-parameter
+        - name: unreachable-code
+        - name: redefines-builtin-id
+    staticcheck:
+      checks:
+        - all
+        - -ST1000
+        - -ST1003
+
+  exclusions:
+    rules:
+      - path: _test\.go
+        linters:
+          - dupl
+          - funlen
+          - gocyclo
+          - gocognit
+          - errcheck
+          - forcetypeassert
+          - maintidx
+          - goconst
+
+issues:
+  max-issues-per-linter: 0
+  max-same-issues: 0
